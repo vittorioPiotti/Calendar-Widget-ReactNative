@@ -3,7 +3,7 @@
  * @package src.scripts.layouts
  * @author Vittorio Piotti
  * @class Calendar.tsx
- * @description Calendar 
+ * @description Footer 
 */
 
 
@@ -55,7 +55,9 @@ const Calendar = () => {
         setDays(initDays());
     };
     const getStartInxMonth = () => {
-        return new Date(year, getInxMonth(), 1).getDay() 
+      
+
+        return new Date(year, getInxMonth(), 1).getDay()  -1
     }
 
 
@@ -68,7 +70,7 @@ const Calendar = () => {
     }
  
     const getNumDaysMonth = () => {
-        return new Date(year,  getInxMonth(), 0).getDate()
+        return new Date(year,  getInxMonth() + 1, 0).getDate()
     }
 
     const getInxMonth = () =>{
@@ -227,10 +229,10 @@ const Calendar = () => {
     const [inxFs,setInxFs] = useState(getStartInxMonth())
     const [yearFs,setYearFs] = useState(MINYEAR)
 
-    const [monthNd,setMonthNd] = useState( setNewMonth(getCelInx(MINDAY) +1))
-    const [dayNd,setDayNd] = useState(    setNewDay(getCelInx(MINDAY) )   )
-    const [inxNd,setInxNd] = useState(getCelInx(MINDAY))
-    const [yearNd,setYearNd] = useState( setNewYear(getCelInx(MINDAY) + 1))
+    const [monthNd,setMonthNd] = useState( MINDAY + 1 > getNumDaysMonth() ? setNewMonth(getCelInx(MINDAY) +1) :MINMONTH )
+    const [dayNd,setDayNd] = useState(MINDAY + 1 > getNumDaysMonth() ? setNewDay(getCelInx(MINDAY) ) :MINDAY + 1  )
+    const [inxNd,setInxNd] = useState( getCelInx(MINDAY)  )
+    const [yearNd,setYearNd] = useState(MINDAY + 1 > getNumDaysMonth() ? setNewYear(getCelInx(MINDAY) + 1): MINYEAR)
 
     const [dateState,setDateState] = useState(false)
  
@@ -254,6 +256,7 @@ const Calendar = () => {
 
     
     const renderDays = () => {
+       
         const rows = [];
         const startInxMonth = getStartInxMonth();
         const numDaysMonth = getRelativeNumDaysMonth();
