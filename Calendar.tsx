@@ -57,7 +57,7 @@ const Calendar = () => {
     const getStartInxMonth = () => {
       
 
-        return new Date(year, getInxMonth(), 1).getDay()  -1
+        return new Date(year, getInxMonth(), 1).getDay()  - 1 == -1  ? 0 : new Date(year, getInxMonth(), 1).getDay()  - 1
     }
 
 
