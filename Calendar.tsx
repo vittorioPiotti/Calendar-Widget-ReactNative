@@ -182,7 +182,7 @@ const Calendar = () => {
        return getStartInxMonth() + getNumDaysMonth() - 1
     }
     const getNumDaysPreviousMonth = () => {
-        return new Date(year,  getInxMonth() -1 == -1 ? 11  : getInxMonth() - 1, 0).getDate()
+        return new Date(year,  getInxMonth() -1 == -1 ? 11  : getInxMonth() , 0).getDate()//new Date(year,  getInxMonth() -1 == -1 ? 11  : getInxMonth() (((- 1))), 0).getDate() //-1 a cosa server?
     }
     const getDaysPreviousMonth = (dayIndex:number) =>{
         return getNumDaysPreviousMonth()  - ((NUMCEL - dayIndex - (NUMCEL - (getStartInxMonth() + getNumDaysMonth() - 1)) ) - getNumDaysMonth())
