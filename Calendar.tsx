@@ -8,40 +8,11 @@
 
 
 import React,  {useState,useEffect}from 'react';
-import { StyleSheet, Text, View,TouchableOpacity } from 'react-native';
-
+import { StyleSheet, Text, View, Image,TouchableOpacity } from 'react-native';
 
 const Calendar = () => {
 
-    const CURRDATE = new Date(); 
-    const MINMONTH = CURRDATE.getMonth(); 
-    const MINYEAR = CURRDATE.getFullYear();
-    const MINDAY = CURRDATE.getDate();
-    
-    const MAXYEAR = 2025; 
-    const MAXMONTH = 11; 
-    const NUMCEL = 42
-
-    const INX = 
-      [  
-        [0, 7, 14, 21, 28, 35],
-        [1, 8, 15, 22, 29, 36],
-        [2,9,16,23,30,37],
-        [3,10,17,24,31,38],
-        [4,11,18,25,32,39],
-        [5,12,19,26,33,40],
-        [6,13,20,27,34,41]
-    ];
-
-
-    const WEEK = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-    const MONTHS = [
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
-
-
-    const initDays = () => {
+    const resetCalendar = ():number[] => {
         return [
             0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,
@@ -50,241 +21,253 @@ const Calendar = () => {
             0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,
         ]
-    }
-    const resetDays = () => {
-        setDays(initDays());
     };
-    const getStartInxMonth = () => {
-      
 
-        return new Date(year, getInxMonth(), 1).getDay()  - 1 == -1  ? 0 : new Date(year, getInxMonth(), 1).getDay()  - 1
+
+    const newCalendar = ():number[]  => {
+        const calendar:number[] = [];
+        const fsInx = getFsInx(curDate.mm,curDate.aa);
+        const ggs = getGGs(curDate.mm,curDate.aa);
+        for(let i = 0; i < DIM_CALENDAR; i ++){
+            calendar[i] = (
+                i < fsInx ? getGGs(calcMM(curDate.mm - 1),calcAA(curDate.mm - 1,curDate.aa))- fsInx + i  + 1
+                : i > ggs + fsInx - 1 ? i - fsInx - ggs + 1
+                : i - fsInx + 1
+            )
+        }
+        return calendar;
+    };
+
+    const initCalendar = ():void => {
+ 
+        setCalendar(newCalendar())
+    };
+
+
+    const initNewCurDate = (mm:number,aa:number):void =>{
+        const mmCur =  calcMM(mm)
+        const aaCur = calcAA(mm,aa)
+        if(
+            !(
+                (
+                    aaCur > MAX_DATE.aa 
+                    || (mmCur > MAX_DATE.mm &&  aaCur == MAX_DATE.aa )
+                )
+                || (
+                    aaCur < MIN_DATE.aa 
+                    || (mmCur < MIN_DATE.mm &&  aaCur == MIN_DATE.aa )
+                )
+            )
+
+          )
+        setCurDate(
+            newCurDate(
+                mmCur,
+                aaCur
+            )
+        )
+    }   
+    const newCurDate = (mm:number,aa:number):{ mm: number, aa: number } =>{
+        return (
+            {
+                mm:mm,
+                aa:aa
+            }
+        )
     }
 
-
+    const getFsInx = (mm:number,aa:number):number => {
+        const inx = new Date(aa, mm , 1).getDay()
+        return inx == 0 ? 6 : inx - 1;
+    }
 
   
-
-
-    const getMonthIndex = () =>{
-        return MONTHS.findIndex(m => m.toUpperCase() === month.toUpperCase()); 
-    }
- 
-    const getNumDaysMonth = () => {
-        return new Date(year,  getInxMonth() + 1, 0).getDate()
-    }
-
-    const getInxMonth = () =>{
-        return MONTHS.indexOf(month)
-    }
-    
-   
-    const setNewYear = (dayIndex: number) =>{
+    const calcMM = (mm:number):number => {
         return (
-            dayIndex > getNumDaysMonth() +  INX[getStartInxMonth()][0] ? calcYear(+1)
-            :  dayIndex < INX[getStartInxMonth()][0] ? calcYear(-1)
-            :year
+            mm == -1 ? 11
+            : mm == 12 ? 0
+            : mm
         )
     }
 
-    const setNewMonth = (dayIndex: number) => {
+    const calcAA = (mm:number,aa:number):number => {
         return(
-            dayIndex > getNumDaysMonth() + INX[getStartInxMonth()][0] ? calcMonth(+1)
-            : dayIndex < INX[getStartInxMonth()][0] ? calcMonth(-1)
-            :getCalcMonthInx(dayIndex)
+            mm == -1 ? aa-1
+            : mm == 12 ? aa+1
+            : aa
         )
-
     }
-
-    const getCalcMonthInx =(dayIndex: number) =>{
-        const startInx = INX[getStartInxMonth()][0] 
-        const inxMonth =  getMonthIndex()
-        return (
-            dayIndex < startInx ? inxMonth - 1
-            : dayIndex >= getNumDaysMonth() + startInx ? inxMonth + 1 
-            :  inxMonth  
-        )
+    const getGGs = (mm:number, aa:number):number => {
+        return new Date(aa, mm +1 , 0).getDate();
     }
     
-
-    const setNewDay = (dayIndex:number) =>{
+    const calcGG =(ggInx:number):number =>{
+        const fsInx:number = getFsInx(curDate.mm,curDate.aa)
+        const ggs:number = getGGs(curDate.mm,curDate.aa)
         return (
-            days[dayIndex] + 1 > getNumDaysMonth() ? 1
-            :    days[dayIndex] + 1
+            ggInx < fsInx ? -1
+            : ggInx >= ggs + fsInx ? +1
+            : 0
         )
-                    
     }
-    const handlePress = (dayIndex:number)=>{
-        const startInx =  INX[getStartInxMonth()][0]
-        const monthInx = getCalcMonthInx(dayIndex)
-            
-
-        if(dateState && dayFs != -1){
-
-            if( ( days[dayIndex] > dayFs && monthInx == monthFs && year == yearFs) || ( monthInx > monthFs && year >= yearFs) || year > yearFs || (dayIndex > getNumDaysMonth() + startInx && dayFs < days[dayIndex])){
-                    setYearNd(setNewYear(dayIndex))
-                    setDayNd(days[dayIndex])
-                    setInxNd(dayIndex)
-                    setMonthNd(setNewMonth(dayIndex))
-            }
-         
+    const getAppDate = (ggInx:number):{ gg: number, mm: number, aa: number }=>{
+       
+        const i = calcGG(ggInx)
+        const mmApp:number = curDate.mm + i;
+        const mmCur:number = calcMM(mmApp)
+        const aaCur:number = calcAA(mmApp, curDate.aa)
+        const ggCur:number = calendar[ggInx] == undefined ? calendar[ggInx - 1] + 1 : calendar[ggInx]
+        return {
+            gg:ggCur,
+            mm:mmCur,
+            aa:aaCur
+        }
+        
+    }
+    const isDate =( appDate: { gg: number, mm: number, aa: number }):boolean=>{
+        if( 
+            appDate.aa  < MIN_DATE.aa
+            || appDate.aa  > MAX_DATE.aa
+            || (appDate.aa  == MIN_DATE.aa && appDate.mm < MIN_DATE.mm)
+            || (appDate.aa  == MAX_DATE.aa && appDate.mm > MAX_DATE.mm)
+            || (appDate.aa  == MIN_DATE.aa && appDate.mm == MIN_DATE.mm && appDate.gg < MIN_DATE.gg)
+            || (appDate.aa  == MAX_DATE.aa && appDate.mm == MAX_DATE.mm && appDate.gg > MAX_DATE.gg)
+         ){
+            return false
         }else{
-            console.log(dayIndex + " " +  days[dayIndex] +" "  + (dayIndex + 1)  + " " +days[dayIndex +1])
-            if( (days[dayIndex] >= MINDAY && monthInx == MINMONTH && year == MINYEAR) || ( monthInx > MINMONTH && year >= MINYEAR) || year > MINYEAR ){
-                setYearFs(setNewYear(dayIndex))
-                setDayFs(days[dayIndex])
-                setInxFs(dayIndex)
-                setMonthFs(setNewMonth(dayIndex))
-
-
-                setMonthNd(
-
-                    setNewMonth(dayIndex +1)
-
-                )
-                setYearNd(
-                    setNewYear(dayIndex + 1)
-                )
-                setDayNd(
-                    setNewDay(dayIndex)
-                )
-                setInxNd(
-                    dayIndex + 1
-                )
-    
-    
-            }
-        
-
-
-
-
-
-
-          
-
+            return true
         }
-        setDateState(!dateState)
-    }
-    const getDateUguale = (day: number,month:number, year:number, gg:number,mm:number,aaaa:number) => {
-        
-        return day == gg && month == mm && year == aaaa 
-    }
-    const getDateMinore = (day: number,month:number, year:number, gg:number,mm:number,aaaa:number) => {
-
-        return (day < gg && month ==  mm && year == aaaa ) || ( month <  mm && year <= aaaa ) || year < aaaa
-
-    }
-    const getDateMaggiore = (day: number,month:number, year:number, gg:number,mm:number,aaaa:number) => {
-        return (day > gg && month ==  mm && year == aaaa ) || ( month >  mm && year >= aaaa ) ||  year > aaaa
     }
 
-    const getRelativeNumDaysMonth = () => {
-       return getStartInxMonth() + getNumDaysMonth() - 1
-    }
-    const getNumDaysPreviousMonth = () => {
-        return new Date(year,  getInxMonth() -1 == -1 ? 11  : getInxMonth() , 0).getDate()//new Date(year,  getInxMonth() -1 == -1 ? 11  : getInxMonth() (((- 1))), 0).getDate() //-1 a cosa server?
-    }
-    const getDaysPreviousMonth = (dayIndex:number) =>{
-        return getNumDaysPreviousMonth()  - ((NUMCEL - dayIndex - (NUMCEL - (getStartInxMonth() + getNumDaysMonth() - 1)) ) - getNumDaysMonth())
+    const initFsDate = ( appDate: { gg: number, mm: number, aa: number })=>{
+        setFsDate({ gg: appDate.gg, mm: appDate.mm, aa: appDate.aa });
     }
 
-    const getDiffDaysMonth = () =>{
-        return NUMCEL - getRelativeNumDaysMonth()
-    }
-    const getDaysNextMonth = (dayIndex:number) =>{
-        return (NUMCEL - dayIndex - getDiffDaysMonth() )*(-1) 
+    const initNdDate = ( appDate: { gg: number, mm: number, aa: number })=>{
+        setNdDate({ gg: appDate.gg, mm: appDate.mm, aa: appDate.aa });
     }
 
-    const getCelInx = (day:number) =>{
-        const inxMonth = getInxMonth() -1
-        const numDays = getNumDaysMonth()
-        for(let i = inxMonth; i < days.length - (NUMCEL - numDays - 1); i ++){
-            if(day == days[i])return i;
-        }
-        return inxMonth +numDays
+
+
+    const incCurDate = ():void=>{
+        initNewCurDate(curDate.mm + 1,curDate.aa)
     }
-
-    const calcMonth = (val : number) => {
-        return (
-            getInxMonth() + val == -1 ? 11 
-            :  getInxMonth() + val == 12 ? 0
-            : getInxMonth()  + val
-        )
+    const decCurDate = ():void =>{
+        initNewCurDate(curDate.mm - 1,curDate.aa)
     }
+    
+    const DIM_CALENDAR:number = 42;
+    const GG_NAMES:string[] = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+    
+    const MM_NAMES:string[] = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
 
-    const calcYear = (val : number) =>{
-        return (
-            getInxMonth() + val == -1 ? year - 1
-            :  getInxMonth() + val == 12 ? year + 1
-            : year
-        )
-    }
-    const [month,setMonth] = useState(MONTHS[CURRDATE.getMonth()])
-    const [year,setYear] = useState(CURRDATE.getFullYear())
-    const [days,setDays] = useState(initDays())
+    const MAX_MM:number = 11
+    const MAX_AA:number = 2025
+    const MAX_GG:number = new Date(MAX_AA, MAX_MM + 1, 0).getDate();
 
+    const DATE:Date = new Date();
 
-    const [monthFs,setMonthFs] = useState(MINMONTH)
-    const [dayFs,setDayFs] = useState(MINDAY)
-    const [inxFs,setInxFs] = useState(getStartInxMonth())
-    const [yearFs,setYearFs] = useState(MINYEAR)
+    const MIN_DATE: { gg: number, mm: number, aa: number } = {
+        gg: DATE.getDate(),
+        mm: DATE.getMonth(),
+        aa: DATE.getFullYear()
+    };
+    
+    const MAX_DATE: { gg: number, mm: number, aa: number } = {
+        mm: MAX_MM,
+        aa: MAX_AA,
+        gg: MAX_GG
+    };
 
-    const [monthNd,setMonthNd] = useState( MINDAY + 1 > getNumDaysMonth() ? setNewMonth(getCelInx(MINDAY) +1) :MINMONTH )
-    const [dayNd,setDayNd] = useState(MINDAY + 1 > getNumDaysMonth() ? setNewDay(getCelInx(MINDAY) ) :MINDAY + 1  )
-    const [inxNd,setInxNd] = useState( getCelInx(MINDAY)  )
-    const [yearNd,setYearNd] = useState(MINDAY + 1 > getNumDaysMonth() ? setNewYear(getCelInx(MINDAY) + 1): MINYEAR)
-
-    const [dateState,setDateState] = useState(false)
  
-    useEffect(()=>{
-        const startInx = INX[getStartInxMonth()][0];
-        resetDays()
-        setDays(prevDays => {
-            const updatedDays = [...prevDays]; 
-            for(let i = 0; i < days.length; i ++){
-                updatedDays[i] = 
-                    i < INX[getStartInxMonth()][0] ? getDaysPreviousMonth(i)
-                    : i >= getNumDaysMonth() + startInx ? getDaysNextMonth(i) 
-                    : i - startInx + 1
-            }
+    const [curDate, setCurDate] = useState<{ mm: number, aa: number }>({ mm: MIN_DATE.mm, aa: MIN_DATE.aa });
     
-            return updatedDays; 
-        });
+    const [fsDate, setFsDate] = useState<{ gg: number, mm: number, aa: number }>({ gg: MIN_DATE.gg, mm: MIN_DATE.mm, aa: MIN_DATE.aa });
 
-    },[month,year])
+    const [ndDate, setNdDate] = useState<{ gg: number, mm: number, aa: number }>({ gg: MIN_DATE.gg, mm: MIN_DATE.mm, aa: MIN_DATE.aa });
+    
+    const [calendar,setCalendar] = useState<number[]>(resetCalendar());
+
+    const [isFsDate,setIsFsDate] = useState<boolean>(false);
+
+    const inputDate = (ggInx:number)=>{
+        
+        const appDate:{ gg: number, mm: number, aa: number } = getAppDate(ggInx)
+        if(isDate(appDate)){
+        if(isFsDate){
+                if(
+                    !(  appDate.aa < fsDate.aa
+                        || (appDate.mm < fsDate.mm &&  appDate.aa ==fsDate.aa) 
+                        || (appDate.mm == fsDate.mm &&  appDate.aa ==fsDate.aa && appDate.gg <= fsDate.gg) 
+                    )
+                ){
+                    initNdDate(appDate)
+                
+                }
+             
+                
+            }else{
+                
+                    if(!(appDate.gg == MAX_DATE.gg && appDate.mm == MAX_DATE.mm && appDate.aa == MAX_DATE.aa) ){
+                        initFsDate(appDate);
+                        initNdDate(getAppDate(ggInx + 1))
+                       
+                    }     
+                
+            }
+        }
+        
+
+
+    
+        setIsFsDate(!isFsDate)
+        
+    }
+
+  
+    const printDate = ():void =>{
+        console.log("FS = " +fsDate.gg + " " +fsDate.mm +" "+fsDate.aa );
+        console.log("ND = "  +ndDate.gg + " " +ndDate.mm +" "+ndDate.aa );
+    }
+
+    useEffect(()=>{
+        
+        initCalendar()
+
+    },[curDate])
+
+
+
 
 
     
     const renderDays = () => {
-       
+    
         const rows = [];
-        const startInxMonth = getStartInxMonth();
-        const numDaysMonth = getRelativeNumDaysMonth();
-        for (let i = 0; i < days.length; i += 7) {
-            const weekDays = days.slice(i, i + 7); 
+        
+        for (let i = 0; i < calendar.length; i += 7) {
+            const weekDays = calendar.slice(i, i + 7); 
             const row = (
                 <View key={i} style={styles.rowBody}>
                     {weekDays.map((day, index) => {
-                        const dayIndex = i + index;
+                        const ggInx = i + index;
                         return (
 
                             <TouchableOpacity 
                                 key={index} 
                                 style={[
                                     styles.cellDayOfMonth,
-                                    getStyleRow(startInxMonth,dayIndex,numDaysMonth)
-                                  
-                                         
-
-                               
+                                    getStyleRow(ggInx)
                                   ]}
                                   
-                                onPress={() => handlePress(dayIndex)} 
+                                onPress={() => inputDate(ggInx)} 
                             >
-                                <Text style={
-                                    getStyleCel(startInxMonth,dayIndex,numDaysMonth)
-                   
-                                    }>
+                                <Text 
+                                    style={getStyleCel(ggInx)}
+                                >
                                 {day}
                                 
                                 </Text>
@@ -307,111 +290,80 @@ const Calendar = () => {
 
   
 
-    const getStyleRow = (startInxMonth:number,dayIndex:number,numDaysMonth:number) => {
-        return(
-            inxNd == -1 && startInxMonth <= dayIndex && numDaysMonth >= dayIndex && getDateUguale(days[dayIndex],getInxMonth(),year, dayFs, monthFs, yearFs) ? styles.selectedStartDayBefore
-            : 
-            inxNd != - 1 && startInxMonth <= dayIndex && numDaysMonth >= dayIndex && getDateMaggiore(days[dayIndex],getInxMonth(),year,dayFs, monthFs, yearFs) && getDateMinore(days[dayIndex],getInxMonth(),year, dayNd, monthNd, yearNd) ? styles.selectedDay
-            :
-            inxNd != - 1 && startInxMonth <= dayIndex && numDaysMonth >= dayIndex && getDateUguale(days[dayIndex],getInxMonth(),year, dayFs, monthFs, yearFs) ? styles.selectedStartDayAfter
-            :
-            inxNd != - 1 && startInxMonth <= dayIndex && numDaysMonth >= dayIndex && getDateUguale(days[dayIndex],getInxMonth(),year, dayNd, monthNd, yearNd) ? styles.selectedEndDay
-            :
-            inxNd == -1 && startInxMonth > dayIndex && getDateUguale(getDaysPreviousMonth(dayIndex),calcMonth(-1),calcYear(-1), dayFs, monthFs, yearFs) ? styles.selectedStartDayBefore
-            :
-            inxNd == -1 && numDaysMonth < dayIndex && getDateUguale(getDaysNextMonth(dayIndex),calcMonth(+1),calcYear(+1), dayFs, monthFs, yearFs) ? styles.selectedStartDayBefore
-            :
-            inxNd != -1 && numDaysMonth < dayIndex  && getDateUguale(getDaysNextMonth(dayIndex),calcMonth(+1),calcYear(+1), dayFs, monthFs, yearFs) ? styles.selectedStartDayAfter
-            :
-            inxNd != -1 && numDaysMonth < dayIndex  && getDateMinore(getDaysNextMonth(dayIndex),calcMonth(+1),calcYear(+1), dayNd, monthNd, yearNd) && getDateMaggiore(getDaysNextMonth(dayIndex),calcMonth(+1),calcYear(+1), dayFs, monthFs, yearFs) && (calcMonth(+1) >= monthFs ||  calcYear(+1) > year)  ? styles.selectedDay
-            :
-            inxNd != -1 && numDaysMonth < dayIndex  && getDateUguale(getDaysNextMonth(dayIndex),calcMonth(+1),calcYear(+1), dayNd, monthNd, yearNd) ? styles.selectedEndDay
-            :
-            inxNd != -1 && startInxMonth > dayIndex  && getDateUguale(getDaysPreviousMonth(dayIndex),calcMonth(-1),calcYear(-1), dayFs, monthFs, yearFs) ? styles.selectedStartDayAfter
-            :
-            inxNd != -1 && startInxMonth > dayIndex  && getDateUguale(getDaysPreviousMonth(dayIndex),calcMonth(-1),calcYear(-1), dayNd, monthNd, yearNd) ? styles.selectedEndDay
-            :
-            inxNd != -1 && startInxMonth > dayIndex  && getDateMaggiore(getDaysPreviousMonth(dayIndex),calcMonth(-1),calcYear(-1), dayFs, monthFs, yearFs) && getDateMinore(getDaysPreviousMonth(dayIndex),calcMonth(-1),calcYear(-1), dayNd, monthNd, yearNd) && (calcMonth(-1) <= monthNd ||  calcYear(-1) < year)  ? styles.selectedDay
+    const getStyleRow = (ggInx:number) => {
+        const appDate:{ gg: number, mm: number, aa: number } = getAppDate(ggInx)
+        return (
+            appDate.gg == fsDate.gg && appDate.mm == fsDate.mm && appDate.aa == fsDate.aa ? styles.selectedStartDayAfter
+            : appDate.gg == ndDate.gg && appDate.mm == ndDate.mm && appDate.aa == ndDate.aa ? styles.selectedEndDay
+            : !(  
+                    (
+                        appDate.aa < fsDate.aa
+                        || (appDate.mm < fsDate.mm &&  appDate.aa ==fsDate.aa) 
+                        || (appDate.mm == fsDate.mm &&  appDate.aa ==fsDate.aa && appDate.gg <= fsDate.gg) 
+                    )
+                    || (
+                        appDate.aa > ndDate.aa
+                        || (appDate.mm > ndDate.mm &&  appDate.aa ==ndDate.aa) 
+                        || (appDate.mm == ndDate.mm &&  appDate.aa ==ndDate.aa && appDate.gg >= ndDate.gg) 
+                    )
+                 )  ? styles.selectedDay
             : null
         )
+
+
     }
-    const getStyleCel = (startInxMonth:number,dayIndex:number,numDaysMonth:number) => {
+    const getStyleCel = (ggInx:number) => {
+        const fsInx = getFsInx(curDate.mm,curDate.aa)
+        const ggs = getGGs(curDate.mm,curDate.aa);
+        const appDate:{ gg: number, mm: number, aa: number } = getAppDate(ggInx)
+
         return (
-            inxNd == -1 && startInxMonth <= dayIndex && numDaysMonth >= dayIndex && getDateUguale(days[dayIndex],getInxMonth(),year, dayFs, monthFs, yearFs) ? styles.textCurrDayOfMonthActive
-            : 
-            inxNd != - 1 && startInxMonth <= dayIndex && numDaysMonth >= dayIndex && getDateMaggiore(days[dayIndex],getInxMonth(),year,dayFs, monthFs, yearFs) && getDateMinore(days[dayIndex],getInxMonth(),year, dayNd, monthNd, yearNd) ? styles.textCurrDayOfMonthActive
-            :
-            inxNd != - 1 && startInxMonth <= dayIndex && numDaysMonth >= dayIndex && getDateUguale(days[dayIndex],getInxMonth(),year, dayFs, monthFs, yearFs) ? styles.textCurrDayOfMonthActive
-            :
-            inxNd != - 1 && startInxMonth <= dayIndex && numDaysMonth >= dayIndex && getDateUguale(days[dayIndex],getInxMonth(),year, dayNd, monthNd, yearNd) ? styles.textCurrDayOfMonthActive
-            :
-            inxNd == -1 && startInxMonth > dayIndex && getDateUguale(getDaysPreviousMonth(dayIndex),calcMonth(-1),calcYear(-1), dayFs, monthFs, yearFs) ? styles.textCurrDayOfMonthActive
-            :
-            inxNd == -1 && numDaysMonth < dayIndex && getDateUguale(getDaysNextMonth(dayIndex),calcMonth(+1),calcYear(+1), dayFs, monthFs, yearFs) ? styles.textCurrDayOfMonthActive
-            :
-            inxNd != -1 && numDaysMonth < dayIndex  && getDateUguale(getDaysNextMonth(dayIndex),calcMonth(+1),calcYear(+1), dayFs, monthFs, yearFs) ? styles.textCurrDayOfMonthActive
-            :
-        inxNd != -1 && numDaysMonth < dayIndex  && getDateMinore(getDaysNextMonth(dayIndex),calcMonth(+1),calcYear(+1), dayNd, monthNd, yearNd) && getDateMaggiore(getDaysNextMonth(dayIndex),calcMonth(+1),calcYear(+1), dayFs, monthFs, yearFs) && ( calcMonth(+1) + 1 >= monthFs ||  calcYear(+1) > year)   ? styles.textCurrDayOfMonthActive
-            :
-            inxNd != -1 && numDaysMonth < dayIndex  && getDateUguale(getDaysNextMonth(dayIndex),calcMonth(+1),calcYear(+1), dayNd, monthNd, yearNd) ? styles.textCurrDayOfMonthActive
-            :
-            inxNd != -1 && startInxMonth > dayIndex  && getDateUguale(getDaysPreviousMonth(dayIndex),calcMonth(-1),calcYear(-1), dayFs, monthFs, yearFs) ? styles.textCurrDayOfMonthActive
-            :
-            inxNd != -1 && startInxMonth > dayIndex  && getDateUguale(getDaysPreviousMonth(dayIndex),calcMonth(-1),calcYear(-1), dayNd, monthNd, yearNd) ? styles.textCurrDayOfMonthActive
-            :
-            inxNd != -1 && startInxMonth > dayIndex  && getDateMaggiore(getDaysPreviousMonth(dayIndex),calcMonth(-1),calcYear(-1), dayFs, monthFs, yearFs) && getDateMinore(getDaysPreviousMonth(dayIndex),calcMonth(-1),calcYear(-1), dayNd, monthNd, yearNd) && (calcMonth(-1) <= monthNd ||  calcYear(-1) < year)  ?styles.textCurrDayOfMonthActive
-            : startInxMonth <= dayIndex && numDaysMonth >= dayIndex ? styles.textCurrDayOfMonth
-            : styles.textDayOfMonth
+            !(  
+                (
+                    appDate.aa < fsDate.aa
+                    || (appDate.mm < fsDate.mm &&  appDate.aa ==fsDate.aa) 
+                    || (appDate.mm == fsDate.mm &&  appDate.aa ==fsDate.aa && appDate.gg < fsDate.gg) 
+                )
+                || (
+                    appDate.aa > ndDate.aa
+                    || (appDate.mm > ndDate.mm &&  appDate.aa ==ndDate.aa) 
+                    || (appDate.mm == ndDate.mm &&  appDate.aa ==ndDate.aa && appDate.gg > ndDate.gg) 
+                )
+             )  ? styles.textCurrDayOfMonthActive
+            :ggInx < fsInx ? styles.textDayOfMonth
+            : ggInx > ggs + fsInx - 1 ? styles.textDayOfMonth
+            : styles.textCurrDayOfMonth
         )
     }
 
     const renderWeek = () => {
-        return WEEK.map((day, index) => (
+        return GG_NAMES.map((day, index) => (
             <View key={index} style={styles.cellDayOfWeek}>
                 <Text style={styles.textDayOfWeek}>{day}</Text>
             </View>
         ));
     };
 
-    const previousMonth = () => {
-        const monthIndex = getMonthIndex()
-        if(monthIndex != MINMONTH || year != MINYEAR){
-            console.log(monthIndex)
-            const previousMonthIndex = monthIndex - 1  == -1 ? 11 :monthIndex - 1; 
-            setMonth(MONTHS[previousMonthIndex]); 
-            if(monthIndex == 0)setYear(year - 1)
 
-          
-        }
-    };
-    
-    const nextMonth = () => {
-        const monthIndex = getMonthIndex()
-        if(monthIndex != MAXMONTH || year != MAXYEAR){
-            const nextMonthIndex =  monthIndex + 1  == 12 ? 0 :monthIndex + 1; 
-            if(monthIndex == 11)setYear(year + 1)
-            setMonth(MONTHS[nextMonthIndex]); 
-        }
-    };
     
 
     return (
         <View style={styles.calendar}>
             <View style={styles.rowHeader}>
                 <View style={[styles.colMonthBefore, styles.col]}>
-                <TouchableOpacity  onPress={() => previousMonth()}>
+                <TouchableOpacity  onPress={() => decCurDate()}>
 
                 <Text style={{ color: 'white', fontSize: 20 }}>{"<"}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={[styles.colMonthYear, styles.col]}>
-                    <Text style={styles.textMonthYear}>{month} {year}</Text>
+                    <Text style={styles.textMonthYear}>{MM_NAMES[curDate.mm]} {curDate.aa}</Text>
                 </View>
                 <View style={[styles.colMonthAfter, styles.col]}>
-                <TouchableOpacity  onPress={() => nextMonth()}>
+                <TouchableOpacity  onPress={() => incCurDate()}>
 
                 <Text style={{ color: 'white', fontSize: 20 }}>{">"}</Text>
-                    </TouchableOpacity>
+               </TouchableOpacity>
 
                 </View>
             </View>
@@ -431,15 +383,16 @@ const styles = StyleSheet.create({
         height: 25
     },
     calendar: {
-        width: 300,
-        height: 350,
+        width: '100%',
+        height: '100%',
         backgroundColor: 'white',
-        borderRadius: 10,
+        borderRadius: 0,
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 3,
         elevation: 5,
+      
     },
     textMonthYear: {
         color: 'white',
@@ -458,8 +411,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '20%',
         backgroundColor: '#6A994E',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0
     },
     col: {
         justifyContent: 'center',
