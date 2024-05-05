@@ -3,7 +3,7 @@
  * @package src.scripts.layouts
  * @author Vittorio Piotti
  * @class Calendar.tsx
- * @description Footer 
+ * @description Calendar 
 */
 
 
