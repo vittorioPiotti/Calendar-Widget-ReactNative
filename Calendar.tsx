@@ -45,25 +45,25 @@ const Calendar = () => {
 
 
     const initNewCurDate = (mm:number,aa:number):void =>{
-        const mmCur =  calcMM(mm)
-        const aaCur = calcAA(mm,aa)
+        const mmRel =  calcMM(mm)
+        const aaRel = calcAA(mm,aa)
         if(
             !(
                 (
-                    aaCur > MAX_DATE.aa 
-                    || (mmCur > MAX_DATE.mm &&  aaCur == MAX_DATE.aa )
+                    aaRel > MAX_DATE.aa 
+                    || (mmRel > MAX_DATE.mm &&  aaRel == MAX_DATE.aa )
                 )
                 || (
-                    aaCur < MIN_DATE.aa 
-                    || (mmCur < MIN_DATE.mm &&  aaCur == MIN_DATE.aa )
+                    aaRel < MIN_DATE.aa 
+                    || (mmRel < MIN_DATE.mm &&  aaRel == MIN_DATE.aa )
                 )
             )
 
           )
         setCurDate(
             newCurDate(
-                mmCur,
-                aaCur
+                mmRel,
+                aaRel
             )
         )
     }   
@@ -110,17 +110,20 @@ const Calendar = () => {
             : 0
         )
     }
+
+   
+
     const getAppDate = (ggInx:number):{ gg: number, mm: number, aa: number }=>{
        
         const i = calcGG(ggInx)
         const mmApp:number = curDate.mm + i;
-        const mmCur:number = calcMM(mmApp)
-        const aaCur:number = calcAA(mmApp, curDate.aa)
-        const ggCur:number = calendar[ggInx] == undefined ? calendar[ggInx - 1] + 1 : calendar[ggInx]
+        const mmRel:number = calcMM(mmApp)
+        const aaRel:number = calcAA(mmApp, curDate.aa)
+        const ggRel:number = calendar[ggInx] == undefined ? calendar[ggInx - 1] + 1 : calendar[ggInx]
         return {
-            gg:ggCur,
-            mm:mmCur,
-            aa:aaCur
+            gg:ggRel,
+            mm:mmRel,
+            aa:aaRel
         }
         
     }
@@ -182,20 +185,43 @@ const Calendar = () => {
         gg: MAX_GG
     };
 
+    const [calendar,setCalendar] = useState<number[]>(resetCalendar());
  
     const [curDate, setCurDate] = useState<{ mm: number, aa: number }>({ mm: MIN_DATE.mm, aa: MIN_DATE.aa });
     
     const [fsDate, setFsDate] = useState<{ gg: number, mm: number, aa: number }>({ gg: MIN_DATE.gg, mm: MIN_DATE.mm, aa: MIN_DATE.aa });
 
-    const [ndDate, setNdDate] = useState<{ gg: number, mm: number, aa: number }>({ gg: MIN_DATE.gg, mm: MIN_DATE.mm, aa: MIN_DATE.aa });
+    const fixGG =(gg: number, mm: number, aa: number ):number => {
+        const ggs = getGGs(mm,aa)
+        return (
+            gg > ggs ? gg - ggs : gg
+        )
+    }
+
+    const fixMM =(gg: number, mm: number, aa: number ):number => {
+        const ggs = getGGs(mm,aa)
+        return (
+            gg > ggs ? calcMM(mm + 1) : mm
+        )
+    }
+
+    const fixAA =(gg: number, mm: number, aa: number ):number => {
+        const ggs = getGGs(mm,aa)
+        return (
+            gg > ggs ? calcAA(mm + 1,aa) : aa
+        )
+    }
+    const [ndDate, setNdDate] = useState<{ gg: number, mm: number, aa: number }>(
+        { gg:fixGG( MIN_DATE.gg + 1,MIN_DATE.mm, MIN_DATE.aa), mm: fixMM(MIN_DATE.gg + 1,MIN_DATE.mm, MIN_DATE.aa), aa:fixAA(MIN_DATE.gg + 1,MIN_DATE.mm, MIN_DATE.aa)}
+    );
     
-    const [calendar,setCalendar] = useState<number[]>(resetCalendar());
+
 
     const [isFsDate,setIsFsDate] = useState<boolean>(false);
 
     const inputDate = (ggInx:number)=>{
-        
         const appDate:{ gg: number, mm: number, aa: number } = getAppDate(ggInx)
+        
         if(isDate(appDate)){
         if(isFsDate){
                 if(
@@ -214,6 +240,7 @@ const Calendar = () => {
                     if(!(appDate.gg == MAX_DATE.gg && appDate.mm == MAX_DATE.mm && appDate.aa == MAX_DATE.aa) ){
                         initFsDate(appDate);
                         initNdDate(getAppDate(ggInx + 1))
+
                        
                     }     
                 
@@ -227,15 +254,12 @@ const Calendar = () => {
         
     }
 
-  
-    const printDate = ():void =>{
-        console.log("FS = " +fsDate.gg + " " +fsDate.mm +" "+fsDate.aa );
-        console.log("ND = "  +ndDate.gg + " " +ndDate.mm +" "+ndDate.aa );
-    }
+ 
 
     useEffect(()=>{
-        
+
         initCalendar()
+        
 
     },[curDate])
 
@@ -292,6 +316,7 @@ const Calendar = () => {
 
     const getStyleRow = (ggInx:number) => {
         const appDate:{ gg: number, mm: number, aa: number } = getAppDate(ggInx)
+
         return (
             appDate.gg == fsDate.gg && appDate.mm == fsDate.mm && appDate.aa == fsDate.aa ? styles.selectedStartDayAfter
             : appDate.gg == ndDate.gg && appDate.mm == ndDate.mm && appDate.aa == ndDate.aa ? styles.selectedEndDay
@@ -363,7 +388,7 @@ const Calendar = () => {
                 <TouchableOpacity  onPress={() => incCurDate()}>
 
                 <Text style={{ color: 'white', fontSize: 20 }}>{">"}</Text>
-               </TouchableOpacity>
+                    </TouchableOpacity>
 
                 </View>
             </View>
