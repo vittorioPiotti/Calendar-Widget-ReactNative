@@ -17,7 +17,7 @@ Link all'Applicazione Calendario: [Link all'App](https://ygmq5s.csb.app/Calendar
 
 ---
 
-La schermate riportata diseguito è acquisita da un dispositivo IOS 
+La schermate è stata acquisita da un dispositivo IOS 
 
 ## Preview
 <img src="https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/screenshot.PNG" alt="Icona" width="300"/>
