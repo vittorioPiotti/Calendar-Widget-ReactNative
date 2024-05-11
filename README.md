@@ -16,7 +16,7 @@ Icona realizzata con [Figma](https://www.figma.com/)
 
 ---
 
-Le schermate riportate diseguito sono gli Screenshots dell'App su IOS 
+La schermate riportata diseguito è acquisita da un dispositivo IOS 
 
 ## Preview
 <img src="https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/screenshot.PNG" alt="Icona" width="300"/>
