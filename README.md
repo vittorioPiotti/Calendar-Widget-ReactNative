@@ -2,6 +2,9 @@
 
 Calendario in react native per selezionare intervallo di tempo ( utile come form di selezionamento data prenotazione)
 
+## Ispirazione
+
+- **Calendario**: è stato **sviluppato indipendentemente ed in modo proprietario** riproponendo la stessa grafica di quella nel sito CodePen: [Link al Calendario](https://codepen.io/sawyer22/pen/ddYroL) 
 
 
 ## Icona
