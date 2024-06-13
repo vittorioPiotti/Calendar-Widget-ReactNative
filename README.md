@@ -6,7 +6,7 @@ Calendario in react native per selezionare intervallo di tempo ( utile come form
 
 ## Icona
 
-<img src="https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/icona.png" alt="Icona" width="300"/>
+<img src="https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/icona.png" alt="Icona" width="100"/>
 
 
 ## Preview
