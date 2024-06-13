@@ -13,7 +13,7 @@ Icona realizzata con [Figma](https://www.figma.com)
 
 ## Preview
 
-Immagine acquisita da [Codesandbox](https://ygmq5s.csb.app/Calendario)
+GIF acquisita da [Codesandbox](https://ygmq5s.csb.app/Calendario)
 
 <img src="https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/calendar.gif" alt="Icona" width="300"/>
 
