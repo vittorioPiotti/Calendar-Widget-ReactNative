@@ -1,6 +1,5 @@
 # Calendario-React-Native
 
-<img src="https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/icona.png" alt="Icona" width="100"/>
 
 Calendario in react native per selezionare intervallo di tempo ( utile come form di selezionamento data prenotazione)
 
