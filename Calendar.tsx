@@ -1,3 +1,10 @@
+/*
+  Calendario-React-Native v1.0.0 (https://github.com/vittorioPiotti/Calendario-React-Native/releases/tag/1.0.0)
+  Copyright 2024 Vittorio Piotti
+  Licensed under GPL-3.0 (https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/LICENSE.md)
+*/
+
+
 /**
  * @access public
  * @package src.scripts.layouts
