@@ -24,11 +24,10 @@ Il Calendario è stato **sviluppato indipendentemente** riproponendo la stessa g
 
 ## Licenza
 
-| Componente         | Versione  | Copyright                         | Licenza                                                       |
-|--------------------|-----------|-----------------------------------|---------------------------------------------------------------|
-| Calendario-React-Native | v1.0.0    | 2024 Vittorio Piotti              | [GPL-3.0 License](https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/LICENSE.md) |
-
-
+| Componente             | Versione | Copyright            | Licenza                                                                                          |
+|------------------------|----------|----------------------|--------------------------------------------------------------------------------------------------|
+| Calendario-React-Native| v1.0.0   | 2024 Vittorio Piotti | [GPL-3.0 License](https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/LICENSE.md) |
+| React Native           | v0.74.0  | Facebook, Inc.       | [MIT License](https://github.com/facebook/react-native/blob/main/LICENSE)                         |
 
 
 
