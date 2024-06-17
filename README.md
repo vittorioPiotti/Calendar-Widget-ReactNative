@@ -2,7 +2,7 @@
 
 
 
-Calendario per selezionare intervallo di tempo 
+Calendario per selezionare intervallo di giorni 
 
 ## Icona
 
