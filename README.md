@@ -11,6 +11,11 @@ Icona realizzata con [Figma](https://www.figma.com)
 <img src="https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/icona.png" alt="Icona" width="100"/>
 
 
+## Ispirazione
+
+Il Calendario è stato **sviluppato indipendentemente** riproponendo la stessa grafica di quella nel sito CodePen: [Link al Calendario](https://codepen.io/sawyer22/pen/ddYroL) 
+
+
 ## Preview
 
 GIF acquisita da [Codesandbox](https://ygmq5s.csb.app/Calendario)
@@ -18,9 +23,6 @@ GIF acquisita da [Codesandbox](https://ygmq5s.csb.app/Calendario)
 <img src="https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/calendar.gif" alt="Icona" width="300"/>
 
 
-## Ispirazione
-
-Il Calendario è stato **sviluppato indipendentemente** riproponendo la stessa grafica di quella nel sito CodePen: [Link al Calendario](https://codepen.io/sawyer22/pen/ddYroL) 
 
 ## Licenza
 
