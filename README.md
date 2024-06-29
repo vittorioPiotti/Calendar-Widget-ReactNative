@@ -5,8 +5,8 @@
 Calendario per selezionare intervallo di giorni 
 
 
-> [!WARNING]
-> Corretto funzionamento non garantito
+> [!TIP]
+> Corretto funzionamento garantito
 
 ## Icona
 
