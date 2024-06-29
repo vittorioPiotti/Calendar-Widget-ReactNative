@@ -4,6 +4,10 @@
 
 Calendario per selezionare intervallo di giorni 
 
+
+> [!WARNING]
+> Corretto funzionamento non garantito
+
 ## Icona
 
 Icona realizzata con [Figma](https://www.figma.com)
