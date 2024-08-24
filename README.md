@@ -8,7 +8,7 @@ Calendario per selezionare intervallo di giorni
 > [!TIP]
 > Corretto funzionamento garantito
 
-### Support Me
+#### Support Me
 
 [<img width="200" src="https://github.com/vittorioPiotti/vittorioPiotti/blob/main/immagini/support.png"/>](https://ko-fi.com/vittoriopiotti)
 
