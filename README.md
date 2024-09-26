@@ -1,4 +1,4 @@
-# Calendario-React-Native
+# Calendar
 
 
 
@@ -37,7 +37,7 @@ GIF acquisita da [Codesandbox](https://ygmq5s.csb.app/Calendario)
 
 | Componente             | Versione | Copyright            | Licenza                                                                                          |
 |------------------------|----------|----------------------|--------------------------------------------------------------------------------------------------|
-| Calendario-React-Native| v1.0.0   | 2024 Vittorio Piotti | [GPL-3.0 License](https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/LICENSE.md) |
+| Calendar | v1.0.0   | 2024 Vittorio Piotti | [GPL-3.0 License](https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/LICENSE.md) |
 | React Native           | v0.74.0  | Facebook, Inc.       | [MIT License](https://github.com/facebook/react-native/blob/main/LICENSE)                         |
 
 
