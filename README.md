@@ -37,8 +37,8 @@ GIF acquisita da [Codesandbox](https://ygmq5s.csb.app/Calendario)
 
 | Componente             | Versione | Copyright            | Licenza                                                                                          |
 |------------------------|----------|----------------------|--------------------------------------------------------------------------------------------------|
-| Calendar | v1.0.0   | 2024 Vittorio Piotti | [GPL-3.0 License](https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/LICENSE.md) |
-| React Native           | v0.74.0  | Facebook, Inc.       | [MIT License](https://github.com/facebook/react-native/blob/main/LICENSE)                         |
+| [Calendar](https://github.com/vittorioPiotti/Calendar-Widget-ReactNative) | [v1.0.0](https://github.com/vittorioPiotti/Calendar-Widget-ReactNative/releases/tag/v1.0.0)    | 2024 Vittorio Piotti [(GitHub page)](https://github.com/vittorioPiotti) [(Personal page)](https://vittoriopiotti.altervista.org/)            | [GPL-3.0 ](https://github.com/vittorioPiotti/Calendar-Widget-ReactNative/blob/main/LICENSE.md) |
+| React Native           | v0.74.0  | Facebook, Inc.       | [MIT ](https://github.com/facebook/react-native/blob/main/LICENSE)                         |
 
 
 
