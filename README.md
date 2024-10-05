@@ -32,11 +32,11 @@ GIF acquisita da [Codesandbox](https://ygmq5s.csb.app/Calendario)
 <img src="https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/calendar.gif" alt="Icona" width="300"/>
 
 
-## Projects that use this library
+## Projects that use this Widget
 
- * Word Automata - "... a graphical tool that allows you to create and simulate automata that recognize words. You can add states, transitions, and set the initial and final states. The tool will then allow you to simulate the automaton on a given word, showing you the path that the automaton takes."
+ * HotelsBooking App - "Applicazione per prenotare le stanze di un hotel"
    
-⭐ If you use the library in your project, you can send me a message and I can showcase it in this page.
+⭐ If you use the widget in your project, you can send me a message and I can showcase it in this page.
 
 
 
