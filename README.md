@@ -34,7 +34,7 @@ GIF acquisita da [Codesandbox](https://ygmq5s.csb.app/Calendario)
 
 ## Projects that use this Widget
 
- * HotelsBooking App - "Applicazione per prenotare le stanze di un hotel"
+ * [HotelsBooking App](https://github.com/vittorioPiotti/HotelsBooking-App-ReactNative) - "Applicazione per prenotare le stanze di un hotel"
    
 ⭐ If you use the widget in your project, you can send me a message and I can showcase it in this page.
 
