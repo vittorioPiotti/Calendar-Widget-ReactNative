@@ -32,6 +32,13 @@ GIF acquisita da [Codesandbox](https://ygmq5s.csb.app/Calendario)
 <img src="https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/calendar.gif" alt="Icona" width="300"/>
 
 
+## Projects that use this library
+
+ * Word Automata - "... a graphical tool that allows you to create and simulate automata that recognize words. You can add states, transitions, and set the initial and final states. The tool will then allow you to simulate the automaton on a given word, showing you the path that the automaton takes."
+   
+⭐ If you use the library in your project, you can send me a message and I can showcase it in this page.
+
+
 
 ## Licenza
 
@@ -39,6 +46,12 @@ GIF acquisita da [Codesandbox](https://ygmq5s.csb.app/Calendario)
 |------------------------|----------|----------------------|--------------------------------------------------------------------------------------------------|
 | [Calendar](https://github.com/vittorioPiotti/Calendar-Widget-ReactNative) | [v1.0.0](https://github.com/vittorioPiotti/Calendar-Widget-ReactNative/releases/tag/v1.0.0)    | 2024 Vittorio Piotti [(GitHub page)](https://github.com/vittorioPiotti) [(Personal page)](https://vittoriopiotti.altervista.org/)            | [GPL-3.0 ](https://github.com/vittorioPiotti/Calendar-Widget-ReactNative/blob/main/LICENSE.md) |
 | React Native           | v0.74.0  | Facebook, Inc.       | [MIT ](https://github.com/facebook/react-native/blob/main/LICENSE)                         |
+
+
+---
+
+I hope you find Calendar useful and look forward to seeing the projects you create with it! 💫
+
 
 
 
