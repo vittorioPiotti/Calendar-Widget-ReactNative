@@ -42,10 +42,26 @@ GIF acquisita da [Codesandbox](https://ygmq5s.csb.app/Calendario)
 
 ## Licenza
 
-| Componente             | Versione | Copyright            | Licenza                                                                                          |
-|------------------------|----------|----------------------|--------------------------------------------------------------------------------------------------|
-| [Calendar](https://github.com/vittorioPiotti/Calendar-Widget-ReactNative) | [v1.0.0](https://github.com/vittorioPiotti/Calendar-Widget-ReactNative/releases/tag/v1.0.0)    | 2024 Vittorio Piotti [(GitHub page)](https://github.com/vittorioPiotti) [(Personal page)](https://vittoriopiotti.altervista.org/)            | [GPL-3.0 ](https://github.com/vittorioPiotti/Calendar-Widget-ReactNative/blob/main/LICENSE.md) |
-| React Native           | v0.74.0  | Facebook, Inc.       | [MIT ](https://github.com/facebook/react-native/blob/main/LICENSE)                         |
+
+
+### Calendar
+
+**Copyright** 2024 Vittorio Piotti [(GitHub page)](https://github.com/vittorioPiotti) [(Personal page)](https://vittoriopiotti.altervista.org/)
+
+**Version** [v1.0.0](https://github.com/vittorioPiotti/Calendar-Widget-ReactNative/releases/tag/1.0.0)
+
+**License** [GPL-3.0](https://github.com/vittorioPiotti/Calendario-React-Native/blob/main/LICENSE.md)
+
+---
+
+
+### React Native
+
+**Copyright** Facebook, Inc.
+
+**Version** [v0.74.0](https://reactnative.dev/blog/2024/04/22/release-0.74)
+
+**License** [MIT](https://github.com/facebook/react-native/blob/main/LICENSE)
 
 
 ---
