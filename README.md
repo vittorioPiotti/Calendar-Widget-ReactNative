@@ -40,7 +40,7 @@ GIF acquisita da [Codesandbox](https://ygmq5s.csb.app/Calendario)
 
 
 
-## Licenza
+## Licenze
 
 
 
